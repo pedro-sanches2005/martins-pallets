@@ -1,69 +1,88 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+import Hero from "@/components/Hero";
+import Reveal from "@/components/Reveal";
+import InstagramShortcut from "@/components/InstagramShortcut";
+import { SERVICOS, SITE, TAMANHOS } from "@/data/site";
 
 export default function Home() {
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>
-            To get started, edit the{" "}
-            <code className={styles.code}>page.tsx</code> file.
-          </h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <>
+      <div className="nav">
+        <div className="wrap">
+          <a className="logo" href="#">Martins <b>Pallets</b></a>
+          <nav>
+            <a href="#sobre">Sobre</a><a href="#servicos">Serviços</a>
+            <a href="#tamanhos">Tamanhos</a><a href="#instagram">Instagram</a><a href="#contato">Contato</a>
+          </nav>
         </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </div>
+
+      <Hero />
+
+      <section id="sobre">
+        <div className="wrap">
+          <Reveal>
+            <span className="eyebrow">Sobre nós</span>
+            <h2>Desde {SITE.desde} na logística das empresas</h2>
+            <p style={{ maxWidth: "68ch", color: "var(--muted)" }}>
+              A Martins Pallets está desde o ano {SITE.desde} nesse mercado, sempre buscando evolução e agilidade na
+              parte logística das empresas. Mantendo a mesma qualidade e o melhor preço da região, fornecemos
+              diversos modelos e medidas de pallets de madeira.
+            </p>
+          </Reveal>
         </div>
-      </main>
-    </div>
+      </section>
+
+      <section id="servicos" style={{ background: "var(--bg-2)" }}>
+        <div className="wrap">
+          <Reveal><span className="eyebrow">O que fazemos</span><h2>Serviços</h2></Reveal>
+          <div className="grid g4">
+            {SERVICOS.map((s, i) => (
+              <Reveal key={s.t} delay={i * 100}>
+                <div className="card"><h3>{s.t}</h3><p>{s.d}</p></div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="tamanhos">
+        <div className="wrap">
+          <Reveal><span className="eyebrow">Pallets de madeira</span><h2>Tamanhos disponíveis</h2></Reveal>
+          <div className="grid g3">
+            {TAMANHOS.map((t, i) => (
+              <Reveal key={t.nome + t.medida} delay={(i % 3) * 100}>
+                <div className="card size">
+                  <img src={`/pallets/${t.img}`} alt={`${t.nome} ${t.medida}`} loading="lazy" />
+                  <div><h3>{t.nome}</h3><span>Medida: {t.medida}</span></div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <InstagramShortcut />
+
+      <section id="contato">
+        <div className="wrap contact">
+          <Reveal>
+            <span className="eyebrow">Fale com a gente</span>
+            <h2>Contato</h2>
+            <ul>
+              <li><b>Telefones</b>{SITE.telefones.join(" · ")}</li>
+              <li><b>E-mail</b>{SITE.email}</li>
+              <li><b>Endereço</b>{SITE.endereco}</li>
+            </ul>
+            <a className="btn btn-wood" href={SITE.whatsapp} target="_blank" rel="noopener">Tire sua dúvida no WhatsApp</a>
+          </Reveal>
+          <Reveal delay={150}>
+            <iframe src={SITE.mapa} loading="lazy" title="Mapa da Martins Pallets" />
+          </Reveal>
+        </div>
+      </section>
+
+      <footer>© {new Date().getFullYear()} {SITE.nome}</footer>
+      <a className="wa-fixed" href={SITE.whatsapp} target="_blank" rel="noopener">WhatsApp</a>
+    </>
   );
 }
