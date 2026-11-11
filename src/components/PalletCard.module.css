@@ -1,0 +1,58 @@
+/* Estilos só do card de tamanhos com "Ver medidas". Não altera o globals.css. */
+.stage { position: relative; display: block; height: 220px; overflow: hidden; }
+
+.planta {
+  background-color: var(--bg-2);
+  background-image:
+    linear-gradient(#f0b45c14 1px, transparent 1px),
+    linear-gradient(90deg, #f0b45c14 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+.svg { display: block; width: 100%; height: 100%; }
+
+/* giro do card (foto <-> medidas) */
+.sai { animation: sai .22s ease-in forwards; }
+.entra { animation: entra .22s ease-out; }
+@keyframes sai { to { transform: perspective(700px) rotateY(-90deg); opacity: 0; } }
+@keyframes entra { from { transform: perspective(700px) rotateY(90deg); opacity: 0; } }
+
+/* botão com ícone de régua */
+.ver {
+  position: absolute; right: 12px; bottom: 12px; z-index: 2;
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 12px; cursor: pointer;
+  background: #14110dd9; color: var(--wood-2);
+  border: 1px solid var(--wood-2); border-radius: 999px;
+  font-family: var(--font-display), sans-serif; font-weight: 700;
+  font-size: .85rem; letter-spacing: .08em; text-transform: uppercase;
+  transition: background .15s, color .15s;
+}
+.ver:hover, .ver:focus-visible { background: var(--wood-2); color: #1a1208; }
+.ver svg { width: 15px; height: 15px; }
+
+/* as cotas "se desenham" depois do giro */
+.cota line { stroke-dasharray: 1; stroke-dashoffset: 1; animation: tracar .6s .2s ease forwards; }
+@keyframes tracar { to { stroke-dashoffset: 0; } }
+.rotulo { opacity: 0; animation: aparecer .3s .7s ease forwards; }
+@keyframes aparecer { to { opacity: 1; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .sai, .entra { animation: none; }
+  .cota line { animation: none; stroke-dashoffset: 0; }
+  .rotulo { animation: none; opacity: 1; }
+}
+
+/* medidas em linha e botão de orçamento, embaixo de cada pallet */
+.dims { list-style: none; display: grid; grid-template-columns: repeat(2, 1fr); margin: 14px 0 0; border-block: 1px solid #ffffff1f; }
+.dims li { padding: 8px 0; text-align: center; }
+.dims li + li { border-left: 1px solid #ffffff1f; }
+.dims small { display: block; font-size: .62rem; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); }
+.dims strong { display: block; font-family: var(--font-display), sans-serif; font-size: 1.6rem; font-weight: 700; color: var(--cream); line-height: 1.2; }
+.quote {
+  width: 100%; margin-top: 14px; padding: 14px 24px; border: 0; border-radius: 999px; cursor: pointer;
+  background: linear-gradient(135deg, var(--wood-2), var(--wood)); color: #1a1208;
+  font-weight: 700; font-size: .95rem; box-shadow: 0 10px 30px #d98e2b44;
+  transition: transform .25s var(--ease);
+}
+.quote:hover { transform: translateY(-3px); }
+@media (prefers-reduced-motion: reduce) { .quote:hover { transform: none; } }

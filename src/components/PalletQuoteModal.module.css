@@ -1,0 +1,60 @@
+/* Janela de orçamento (tema escuro do site). Só estilos do modal; não altera o globals.css. */
+.overlay {
+  position: fixed; inset: 0; z-index: 100;
+  background: #000000b8; display: grid; place-items: end center;
+  animation: fundo .2s ease;
+}
+@media (min-width: 640px) { .overlay { place-items: center; } }
+@keyframes fundo { from { opacity: 0; } }
+
+.sheet {
+  position: relative; width: min(100%, 480px); max-height: 94svh; overflow: auto;
+  background: var(--bg-2); color: var(--cream);
+  border: 1px solid #ffffff1f; border-bottom: 0; border-radius: 18px 18px 0 0;
+  padding: 28px 22px calc(26px + env(safe-area-inset-bottom));
+  animation: subir .3s var(--ease);
+}
+@media (min-width: 640px) {
+  .sheet { border-bottom: 1px solid #ffffff1f; border-radius: 18px; box-shadow: 0 30px 80px #000000aa; }
+}
+@keyframes subir { from { transform: translateY(40px); opacity: 0; } }
+
+.x {
+  position: absolute; top: 10px; right: 14px; background: none; border: 0;
+  color: var(--cream); font-size: 2rem; line-height: 1; cursor: pointer;
+}
+.x:hover { color: var(--wood-2); }
+
+.titulo {
+  font-family: var(--font-display), sans-serif; text-transform: uppercase;
+  font-size: 2.1rem; line-height: 1; margin-bottom: 18px; color: var(--cream);
+}
+.titulo small { font-size: 1rem; color: var(--wood-2); }
+
+.form { display: grid; gap: 14px; }
+.form label { display: grid; gap: 6px; font-size: .85rem; font-weight: 600; color: var(--muted); }
+.form input, .form textarea {
+  width: 100%; background: var(--bg); color: var(--cream);
+  border: 1px solid #ffffff2e; border-radius: 10px; padding: 13px;
+  font: 400 16px var(--font-body), sans-serif; outline: none; transition: border-color .15s;
+}
+.form input::placeholder, .form textarea::placeholder { color: #b9ad9a88; }
+.form input:focus, .form textarea:focus { border-color: var(--wood-2); }
+
+.send {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  padding: 14px 24px; border: 0; border-radius: 999px; cursor: pointer;
+  background: var(--wa); color: #fff; font-weight: 700; font-size: .95rem;
+  transition: transform .25s var(--ease), box-shadow .25s;
+  box-shadow: 0 10px 30px #25d36644;
+}
+.send:hover { transform: translateY(-3px); }
+
+.ok { display: grid; justify-items: center; gap: 10px; padding: 30px 0; text-align: center; color: var(--wa); }
+.ok p { color: var(--muted); }
+.ok .titulo { margin: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  .overlay, .sheet { animation: none; }
+  .send:hover { transform: none; }
+}
